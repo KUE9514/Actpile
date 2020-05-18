@@ -18,10 +18,38 @@ class ActivitiesController extends Controller
         $cal = new Calendar();
         $tag = $cal->showCalendarTag($request->month,$request->year);
         
+        $activities = $user->activities()->orderBy('created_at', 'desc')->paginate(10);
+        
         $data = [
             'user' =>$user,
-            'cal_tag' => $tag
+            'cal_tag' => $tag,
+            'activities' => $activities,
         ];
         return view('welcome', $data);
+    }
+    
+    public function store(Request $request)
+    {
+        $this->validate($request, [
+             
+             'title' => 'required|max:10',
+             ]);
+        $request->user()->activities()->create([
+            'title' => $request->title,
+            'content' => $request->content,
+            'time' => $request->time,
+            ]);
+        return back();
+    }
+    
+    public function destroy($id)
+    {
+        $activity = \App\Activity::find($id);
+        
+        if(\Auth::id() === $activities->user_id) {
+            $activities->delete();
+    }
+    
+    return back();
     }
 }
