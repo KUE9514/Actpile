@@ -51,7 +51,7 @@ EOS;
                 if ($day <= 0 || $day > $lastDay) {
                     $this->html .= "<td>&nbsp;</td>";
                 } else {
-                    $this->html .= "<td>" . $day . "</td>";
+                    $this->html .= "<td class='table-hover'>" . $day . "</td>";
                 }
                $day++;
             }

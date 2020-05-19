@@ -8,7 +8,7 @@
                 <p class="card-title">{{ $user->name }}</p>
             </div>
             <div class="card-body">
-                <img class="rounded img-fluid" src="{{ Gravatar::src($user->name, 100) }}" alt="">
+                <img class="rounded-circle img-fluid" src="{{ Gravatar::src($user->name, 100) }}" alt="">
             </div>
         </div>
         <div class="col">
@@ -17,7 +17,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-7">
+        <div class="col-md-8">
             {!! $cal_tag !!}
             
             @if (Auth::id() == $user->id)
@@ -45,7 +45,7 @@
             @endif
             
         </div>
-        <div class="col-md-5 card">
+        <div class="col-md-4 card">
             @if (count($activities) > 0)
                 @include('activities.activities', ['activities' => $activities])
             @endif

@@ -13,18 +13,19 @@ class ActivitiesController extends Controller
     public function index(Request $request)
     {
         $data = [];
-        $user = \Auth::user();
-        
-        $cal = new Calendar();
-        $tag = $cal->showCalendarTag($request->month,$request->year);
-        
-        $activities = $user->activities()->orderBy('created_at', 'desc')->paginate(10);
-        
-        $data = [
-            'user' =>$user,
-            'cal_tag' => $tag,
-            'activities' => $activities,
-        ];
+        if (\Auth::check())
+        {
+            $user = \Auth::user();
+            $cal = new Calendar();
+            $tag = $cal->showCalendarTag($request->month,$request->year);
+            $activities = $user->activities()->orderBy('created_at', 'desc')->paginate(10);
+            
+            $data = [
+                'user' =>$user,
+                'cal_tag' => $tag,
+                'activities' => $activities,
+            ];
+        }
         return view('welcome', $data);
     }
     
@@ -46,8 +47,8 @@ class ActivitiesController extends Controller
     {
         $activity = \App\Activity::find($id);
         
-        if(\Auth::id() === $activities->user_id) {
-            $activities->delete();
+        if(\Auth::id() === $activity->user_id) {
+            $activity->delete();
     }
     
     return back();
