@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Activity extends Model
 {
-    protected $fillable = ['title', 'time', 'content', 'user_id'];
+    protected $fillable = ['day', 'title', 'time', 'content', 'user_id'];
     
     public function user()
     {

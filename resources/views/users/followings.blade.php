@@ -24,9 +24,7 @@
         </div>
         <div class="col-md-4">
         @include('users.navtabs', ['user' => $user])
-        @if (count($activities) > 0)
-            @include('activities.activities', ['activities' => $activities])
-        @endif
-        </div>
+        @include('users.users', ['users' => $users])
+        </div
     </div>
 @endsection

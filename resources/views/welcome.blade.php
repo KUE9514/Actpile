@@ -23,6 +23,12 @@
             @if (Auth::id() == $user->id)
                 {!! Form::open(['route' => 'activities.store']) !!}
                     <div class="form-group row">
+                        <label class="col-form-label">日付：</label>
+                        <div class="col-4">
+                            {!! Form::date('day', old('day'), ['class' => 'form-control']) !!}
+                        </div>
+                    </div>
+                    <div class="form-group row">
                         <label class="col-form-label">活動内容：</label>
                         <div class="col-3">
                             {!! Form::text('title', old('title'), ['class' => 'form-control']) !!}

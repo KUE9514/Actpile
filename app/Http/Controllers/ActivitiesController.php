@@ -17,7 +17,8 @@ class ActivitiesController extends Controller
         {
             $user = \Auth::user();
             $cal = new Calendar();
-            $tag = $cal->showCalendarTag($request->month,$request->year);
+            $tag = $cal->showCalendarTag($request->month,$request->year,"");
+            
             $activities = $user->activities()->orderBy('created_at', 'desc')->paginate(10);
             
             $data = [
@@ -36,6 +37,7 @@ class ActivitiesController extends Controller
              'title' => 'required|max:10',
              ]);
         $request->user()->activities()->create([
+            'day' => $request->day,
             'title' => $request->title,
             'content' => $request->content,
             'time' => $request->time,

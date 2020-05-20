@@ -3,8 +3,12 @@
 namespace App;
 class Calendar
 {
+    private $activity;
+    function __construct() {
+        $this->activities = Activity::all();
+    }
     private $html;    
-    public function showCalendarTag($m, $y)
+    public function showCalendarTag($m, $y,$path)
     {
         //$activities = [3 => "予定1", 2 => "予定2"];
         
@@ -30,9 +34,9 @@ class Calendar
         $this->html = <<< EOS
         
 <h1 class="text-center">
-    <a class="btn btn-light" href="/?year={$prev_year}&month={$prev_month}" role="button">&lt;</a>
+    <a class="btn btn-light" href="{$path}/?year={$prev_year}&month={$prev_month}" role="button">&lt;</a>
     {$year}年{$month}月
-    <a class="btn btn-light" href="/?year={$next_year}&month={$next_month}" role="button">&gt;</a>
+    <a class="btn btn-light" href="{$path}/?year={$next_year}&month={$next_month}" role="button">&gt;</a>
 </h1>
 <table class="table table-bordered">
     <tr>
@@ -51,7 +55,15 @@ EOS;
                 if ($day <= 0 || $day > $lastDay) {
                     $this->html .= "<td>&nbsp;</td>";
                 } else {
-                    $this->html .= "<td class='table-hover'>" . $day . "</td>";
+                    $this->html .= "<td>" . $day . "&nbsp<a href='#'>詳細</a>";
+                    $target = date("y-m-d", mktime(0,0,0, $month, $day, $year));
+                    foreach($this->activities as $activity) {
+                        if ($activity->day == $target) {
+                            $this->html .= $activity->title;
+                            break;
+                        }
+                    }
+                    $this->html .= "</td>";
                 }
                $day++;
             }

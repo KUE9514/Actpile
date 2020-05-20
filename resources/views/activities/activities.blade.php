@@ -7,6 +7,9 @@
                     {!! link_to_route('users.show', $activity->user->name, ['id' => $activity->user->id]) !!}
                 </div>
                 <div>
+                    {!! $activity->day !!}
+                </div>    
+                <div>
                     {!! $activity->title !!}
                     {!! $activity->time !!}
                     <p class="mb-0">{!! $activity->content !!}</p>

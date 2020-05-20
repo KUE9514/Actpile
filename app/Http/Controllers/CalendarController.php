@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use App\User;
 
+use App\Activity;
+
 use App\Calendar;
 
 class CalendarController extends Controller
@@ -16,5 +18,11 @@ class CalendarController extends Controller
         $tag = $cal->showCalendarTag($request->month,$request->year);
 
         return view('calendar.index', ['cal_tag' => $tag]);
+    }
+    
+    public function getActivities (Request $request)
+    {
+        $list = Activity::all();
+        return view('welcome', ['list' => $list]);
     }
 }
