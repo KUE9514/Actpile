@@ -19,7 +19,7 @@ class ActivitiesController extends Controller
             $cal = new Calendar();
             $tag = $cal->showCalendarTag($request->month,$request->year,"");
             
-            $activities = $user->activities()->orderBy('created_at', 'desc')->paginate(10);
+            $activities = $user->feed_activities()->orderBy('created_at', 'desc')->paginate(10);
             
             $data = [
                 'user' =>$user,

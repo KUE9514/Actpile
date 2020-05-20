@@ -26,12 +26,16 @@ class UsersController extends Controller
         $cal = new Calendar();
         $tag = $cal->showCalendarTag($request->month,$request->year,$id);
         $activities = $user->activities()->orderBy('created_at', 'desc')->paginate(10);
-
-        return view('users.show', [
+        
+        $data = [
             'user' =>$user,
             'cal_tag' => $tag,
             'activities' => $activities,
-        ]);
+        ];
+        
+        $data += $this->counts($user);
+
+        return view('users.show', $data);
     }
     
     public function followings(Request $request, $id)
