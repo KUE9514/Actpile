@@ -3,15 +3,13 @@
 namespace App;
 class Calendar
 {
-    private $activity;
-    function __construct() {
-        $this->activities = Activity::all();
+    private $act;
+    function __construct($act) {
+        $this->activities = $act;
     }
     private $html;    
     public function showCalendarTag($m, $y,$path)
     {
-        //$activities = [3 => "予定1", 2 => "予定2"];
-        
         $year = $y;
         $month = $m;
         if ($year == null) {
@@ -55,11 +53,11 @@ EOS;
                 if ($day <= 0 || $day > $lastDay) {
                     $this->html .= "<td>&nbsp;</td>";
                 } else {
-                    $this->html .= "<td>" . $day . "&nbsp<a href='#'>詳細</a>";
-                    $target = date("y-m-d", mktime(0,0,0, $month, $day, $year));
-                    foreach($this->activities as $activity) {
-                        if ($activity->day == $target) {
-                            $this->html .= $activity->title;
+                    $this->html .= "<td><a href=''>" . $day . "&nbsp</a>";
+                    $target = date("Y-m-d", mktime(0,0,0, $month, $day, $year));
+                    foreach($this->activities as $val) {
+                        if (\Auth::id() === $val->user_id && $val->day == $target) {
+                            $this->html .= $val->title . $val->time;
                             break;
                         }
                     }
@@ -67,10 +65,8 @@ EOS;
                 }
                $day++;
             }
-
             $this->html .= "</tr>";
         }
-
         return $this->html .= '</table>';
     }
 }

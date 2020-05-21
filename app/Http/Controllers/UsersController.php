@@ -22,8 +22,8 @@ class UsersController extends Controller
     public function show(Request $request, $id)
     {
         $user = User::find($id);
-        
-        $cal = new Calendar();
+        $list = Activity::all();
+        $cal = new Calendar($list);
         $tag = $cal->showCalendarTag($request->month,$request->year,$id);
         $activities = $user->activities()->orderBy('created_at', 'desc')->paginate(10);
         
@@ -42,7 +42,8 @@ class UsersController extends Controller
     {
         $user = User::find($id);
         $followings = $user->followings()->paginate(10);
-        $cal = new Calendar();
+        $list = Activity::all();
+        $cal = new Calendar($list);
         $tag = $cal->showCalendarTag($request->month,$request->year,'');
         
         $data = [
@@ -60,7 +61,8 @@ class UsersController extends Controller
     {
         $user = User::find($id);
         $followers = $user->followers()->paginate(10);
-        $cal = new Calendar();
+        $list = Activity::all();
+        $cal = new Calendar($list);
         $tag = $cal->showCalendarTag($request->month,$request->year,'');
         
         $data = [

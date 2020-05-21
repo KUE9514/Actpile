@@ -14,13 +14,26 @@
                     {!! $activity->time !!}
                     <p class="mb-0">{!! $activity->content !!}</p>
                 </div>
-                <div>
-                    {!! Form::submit('拍手', ['class' => 'btn btn-light btn-sm']) !!}
+                <div class="row">
+                    <div class="col-3">
+                    {!! link_to_route('activity.show', '詳細', ['id' => $activity->user->id], ['class' => 'btn btn-light btn-sm']) !!}
+                    </div>
+                    
+                    
+                    <div class="col-2">
+                        {!! Form::open(['route' => ['applauses.applause', $activity->id]]) !!}
+                            {!! Form::submit('拍手', ['class' => "btn btn-light btn-sm"]) !!}
+                        {!! Form::close() !!}
+                    </div>    
+                   
+                    
+                    <div class="col-2">
                     @if (Auth::id() == $activity->user_id)
                         {!! Form::open(['route' => ['activities.destroy', $activity->id], 'method' => 'delete']) !!}
                             {!! Form::submit('Delete', ['class' => 'btn btn-danger btn-sm']) !!}
                         {!! Form::close() !!}
                     @endif
+                    </div>
                 </div>
             </div>
         </li>

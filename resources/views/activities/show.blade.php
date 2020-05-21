@@ -21,13 +21,22 @@
     <div class="row">
         <div class="col-md-8">
             {!! $cal_tag !!}
-            @include('activities.create_activity')
+            <ul class="list-unstyled">
+
+                <div>
+           
+                </div>
+                <div>
+                    {!! $activities !!}
+                </div>    
+                <div>
+                   
+                </div>
+   
         </div>
         <div class="col-md-4">
-        @include('users.navtabs', ['user' => $user])
-        @if (count($activities) > 0)
-            @include('activities.activities', ['activities' => $activities])
-        @endif
+
+        
         </div>
     </div>
 @endsection

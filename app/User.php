@@ -81,4 +81,25 @@ class User extends Authenticatable
         $follow_user_ids[] = $this->id;
         return Activity::whereIn('user_id', $follow_user_ids);
     }
+    
+    public function applauses()
+    {
+        return $this->belongsToMany(Activity::class, 'applauses', 'user_id', 'activity_id')->withTimestamps();
+    }
+    
+    public function applause($activityId)
+    {
+        if ($this->is_applauses($activityId))
+        {
+            return false;
+        } else {
+            $this->applauses()->attach($activityId);
+            return true;
+        }
+    }
+    
+    public function is_applauses($activityId)
+    {
+        return $this->applauses()->where('activity_id', $activityId)->exists();
+    }
 }

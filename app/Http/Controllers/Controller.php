@@ -15,11 +15,13 @@ class Controller extends BaseController
         $count_activities = $user->activities()->count();
         $count_followings = $user->followings()->count();
         $count_followers = $user->followers()->count();
+        //$count_applauses = $user->apprauses()->count();
         
         return [
             'count_activities' => $count_activities,
             'count_followings' => $count_followings,
             'count_followers' => $count_followers,
+            //'count_applauses' => $count_applauses,
         ];
     }
 }
