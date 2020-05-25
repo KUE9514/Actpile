@@ -8,6 +8,7 @@
                 </div>
                 <div>
                     {!! $activity->day !!}
+                    {!! $activity->id !!}
                 </div>    
                 <div>
                     {!! $activity->title !!}
@@ -16,26 +17,31 @@
                 </div>
                 <div class="row">
                     <div class="col-3">
-                    {!! link_to_route('activity.show', '詳細', ['id' => $activity->user->id], ['class' => 'btn btn-light btn-sm']) !!}
+                    {!! link_to_route('activity.show', '詳細', ['id' => $activity->user->id, 'activity_id' => $activity->id], ['class' => 'btn btn-light btn-sm']) !!}
+                    </div>
+                    <div class="col-３">
+                        <p class="btn btn-light btn-sm">コメント</p>
                     </div>
                     
-                    
-                    <div class="col-2">
-                        {!! Form::open(['route' => ['applauses.applause', $activity->id]]) !!}
-                            {!! Form::submit('拍手', ['class' => "btn btn-light btn-sm"]) !!}
-                        {!! Form::close() !!}
+                    <div class="col-3">
+                        @if (Auth::User()->is_applauses($activity->id))
+                            {!! Form::open(['route' => ['applauses.applause', $activity->id]]) !!}
+                                {!! Form::submit('拍手', ['class' => "btn btn-success btn-sm"]) !!}
+                            {!! Form::close() !!}
+                            
+                        @else
+                            {!! Form::open(['route' => ['applauses.applause', $activity->id]]) !!}
+                                {!! Form::submit('拍手', ['class' => "btn btn-light btn-sm"]) !!}
+                            {!! Form::close() !!}
+                        @endif
+                        <span class="badge badge-secondary">{{ $count_applauses }}</span>
                     </div>    
                    
                     
-                    <div class="col-2">
-                    @if (Auth::id() == $activity->user_id)
-                        {!! Form::open(['route' => ['activities.destroy', $activity->id], 'method' => 'delete']) !!}
-                            {!! Form::submit('Delete', ['class' => 'btn btn-danger btn-sm']) !!}
-                        {!! Form::close() !!}
-                    @endif
-                    </div>
+                    
                 </div>
             </div>
         </li>
     @endforeach
 </ul>
+{{ $activities->links('pagination::bootstrap-4') }}

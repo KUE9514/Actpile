@@ -12,8 +12,7 @@
             </div>
         </div>
         <div class="col">
-            <h2>合計時間</h2>
-            <h2>合計時間</h2>
+           
         </div>
     </div>
     <div class="row">

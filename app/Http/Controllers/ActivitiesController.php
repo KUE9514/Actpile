@@ -17,10 +17,11 @@ class ActivitiesController extends Controller
         $data = [];
         if (\Auth::check())
         {
+            $targetuserId = \Auth::id();
             $user = \Auth::user();
             $list = Activity::all();
             $cal = new Calendar($list);
-            $tag = $cal->showCalendarTag($request->month,$request->year,"");
+            $tag = $cal->showCalendarTag($request->month,$request->year,'',$targetuserId);
             
             $activities = $user->feed_activities()->orderBy('created_at', 'desc')->paginate(10);
             
@@ -29,7 +30,11 @@ class ActivitiesController extends Controller
                 'cal_tag' => $tag,
                 'activities' => $activities,
             ];
+            //不明↓
+            $data += $this->counts($user);
         }
+        
+        
         return view('welcome', $data);
     }
     
@@ -52,28 +57,73 @@ class ActivitiesController extends Controller
     {
         $activity = \App\Activity::find($id);
         
-        if(\Auth::id() === $activity->user_id) {
+        if(\Auth::id() === $activity->user->id) {
             $activity->delete();
+        }
+    
+        return redirect('/');
     }
     
-    return back();
-    }
-    
-    public function show(Request $request, $id)
+    public function show(Request $request, $id, $activity_id)
     {
+        //var_dump($activity_id);
+        
         $user = User::find($id);
+        $activity = Activity::find($activity_id);
         $followings = $user->followings()->paginate(10);
         $list = Activity::all();
         $cal = new Calendar($list);
-        $tag = $cal->showCalendarTag($request->month,$request->year,'');
+        $tag = $cal->showCalendarTag($request->month,$request->year,'',$id);
         $activities = $user->activities()->orderBy('created_at', 'desc')->paginate(10);
+        
         
         $data = [
             'user' => $user,
             'users' => $followings,
             'cal_tag' => $tag,
             'activities' => $activities,
+            'activity' => $activity
         ];
+        $data += $this->counts($user);
+        
         return view('activities.show',$data);
+    }
+    
+    public function edit (Request $request, $id, $activity_id) 
+    {
+        $user = User::find($id);
+        $activity = Activity::find($activity_id);
+        $followings = $user->followings()->paginate(10);
+        $list = Activity::all();
+        $cal = new Calendar($list);
+        $tag = $cal->showCalendarTag($request->month,$request->year,'',$id);
+        $activities = $user->activities()->orderBy('created_at', 'desc')->paginate(10);
+        
+        
+        $data = [
+            'user' => $user,
+            'users' => $followings,
+            'cal_tag' => $tag,
+            'activities' => $activities,
+            'activity' => $activity
+        ];
+        $data += $this->counts($user);
+        return view('activities.edit', $data);
+    }
+    
+    public function update (Request $request)
+    {
+        $this->validate($request, [
+             
+             'title' => 'required|max:10',
+             ]);
+        $request->user()->activities()->save([
+            'day' => $request->day,
+            'title' => $request->title,
+            'content' => $request->content,
+            'time' => $request->time,
+            ]);
+        return back();
+        
     }
 }

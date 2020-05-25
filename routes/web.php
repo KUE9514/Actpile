@@ -28,13 +28,15 @@ Route::group(['middleware' => ['auth']], function () {
         Route::delete('unfollow', 'UserFollowController@destroy')->name('user.unfollow');
         Route::get('followings', 'UsersController@followings')->name('users.followings');
         Route::get('followers', 'UsersController@followers')->name('users.followers');
-        Route::get('activities', 'ActivitiesController@show')->name('activity.show');
+        Route::get('activities/{activity_id}', 'ActivitiesController@show')->name('activity.show');
+        Route::get('activities/{activity_id}/edit', 'ActivitiesController@edit')->name('activity.edit');
+        Route::post('activities/{activity_id}', 'ActivitiesController@update')->name('activity.update');
         Route::get('applauses', 'UsersController@applauses')->name('users.applauses');
     });
     Route::group(['prefix' => 'applauses/{id}'], function() {
         Route::post('applause', 'ApplauseController@store')->name('applauses.applause');
     });
     
-    Route::resource('activities', 'ActivitiesController', ['only' => ['store', 'destroy', 'show']]);
+    Route::resource('activities', 'ActivitiesController', ['only' => ['store', 'destroy']]);
 });
 

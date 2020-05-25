@@ -14,29 +14,33 @@
             </div>
         </div>
         <div>
-            <P>合計時間</P>
-            <P>合計時間</P>
+            
         </div>
     </div>
     <div class="row">
         <div class="col-md-8">
             {!! $cal_tag !!}
-            <ul class="list-unstyled">
+            
+            日付:{!! $activity->day !!}
+            活動内容：{!! $activity->title !!}
+            活動時間：{!! $activity->time !!}
+            メモ：{!! $activity->content !!}
+            
+            @if (Auth::id() == $activity->user_id)
+                {!! link_to_route('activity.edit', '編集', ['id' => $activity->user->id, 'activity_id' => $activity->id], ['class' => 'btn btn-light btn-sm']) !!}
+            
+                {!! Form::open(['route' => ['activities.destroy', $activity->id], 'method' => 'delete']) !!}
+                    {!! Form::submit('Delete', ['class' => 'btn btn-danger btn-sm']) !!}
+                {!! Form::close() !!}
+            @endif
 
-                <div>
-           
-                </div>
-                <div>
-                    {!! $activities !!}
-                </div>    
-                <div>
-                   
-                </div>
-   
+            
         </div>
         <div class="col-md-4">
-
-        
+        @include('users.navtabs', ['user' => $user])
+        @if (count($activities) > 0)
+            @include('activities.activities', ['activities' => $activities])
+        @endif
         </div>
     </div>
 @endsection

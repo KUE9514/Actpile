@@ -8,7 +8,7 @@ class Calendar
         $this->activities = $act;
     }
     private $html;    
-    public function showCalendarTag($m, $y,$path)
+    public function showCalendarTag($m, $y,$path, $targetuserId)
     {
         $year = $y;
         $month = $m;
@@ -53,11 +53,11 @@ EOS;
                 if ($day <= 0 || $day > $lastDay) {
                     $this->html .= "<td>&nbsp;</td>";
                 } else {
-                    $this->html .= "<td><a href=''>" . $day . "&nbsp</a>";
+                    $this->html .= "<td>" . $day . "&nbsp";
                     $target = date("Y-m-d", mktime(0,0,0, $month, $day, $year));
                     foreach($this->activities as $val) {
-                        if (\Auth::id() === $val->user_id && $val->day == $target) {
-                            $this->html .= $val->title . $val->time;
+                        if ($targetuserId == $val->user_id && $val->day == $target) {
+                            $this->html .= $val->title . "<br>".$val->time . "<br><a href=''>詳細</a>";
                             break;
                         }
                     }

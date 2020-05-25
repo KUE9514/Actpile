@@ -14,8 +14,7 @@
             </div>
         </div>
         <div>
-            <P>合計時間</P>
-            <P>合計時間</P>
+           
         </div>
     </div>
     <div class="row">
