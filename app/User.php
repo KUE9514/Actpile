@@ -102,4 +102,9 @@ class User extends Authenticatable
     {
         return $this->applauses()->where('activity_id', $activityId)->exists();
     }
+    
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 }

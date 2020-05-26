@@ -20,7 +20,7 @@
                     {!! link_to_route('activity.show', '詳細', ['id' => $activity->user->id, 'activity_id' => $activity->id], ['class' => 'btn btn-light btn-sm']) !!}
                     </div>
                     <div class="col-３">
-                        <p class="btn btn-light btn-sm">コメント</p>
+                    {!! link_to_route('comments.show', 'コメント', ['id' => $activity->id], ['class' => 'btn btn-light btn-sm']) !!}
                     </div>
                     
                     <div class="col-3">
@@ -36,9 +36,6 @@
                         @endif
                         <span class="badge badge-secondary">{{ $count_applauses }}</span>
                     </div>    
-                   
-                    
-                    
                 </div>
             </div>
         </li>

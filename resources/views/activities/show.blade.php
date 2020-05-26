@@ -21,10 +21,12 @@
         <div class="col-md-8">
             {!! $cal_tag !!}
             
-            日付:{!! $activity->day !!}
-            活動内容：{!! $activity->title !!}
-            活動時間：{!! $activity->time !!}
-            メモ：{!! $activity->content !!}
+            <p>日付:{!! $activity->day !!}</p>
+            <p>活動内容：{!! $activity->title !!}</p>
+            <p>活動時間：{!! $activity->time !!}</p>
+            <p>メモ：{!! $activity->content !!}</p>
+            
+            {!! link_to_route('comments.show', 'コメント', ['id' => $activity->id], ['class' => 'btn btn-light btn-sm']) !!}
             
             @if (Auth::id() == $activity->user_id)
                 {!! link_to_route('activity.edit', '編集', ['id' => $activity->user->id, 'activity_id' => $activity->id], ['class' => 'btn btn-light btn-sm']) !!}
@@ -33,9 +35,8 @@
                     {!! Form::submit('Delete', ['class' => 'btn btn-danger btn-sm']) !!}
                 {!! Form::close() !!}
             @endif
-
-            
         </div>
+        
         <div class="col-md-4">
         @include('users.navtabs', ['user' => $user])
         @if (count($activities) > 0)

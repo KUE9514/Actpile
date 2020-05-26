@@ -5,10 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\User;
-
 use App\Calendar;
-
 use App\Activity;
+use App\Comment;
 
 class ActivitiesController extends Controller
 {
@@ -30,11 +29,8 @@ class ActivitiesController extends Controller
                 'cal_tag' => $tag,
                 'activities' => $activities,
             ];
-            //不明↓
             $data += $this->counts($user);
         }
-        
-        
         return view('welcome', $data);
     }
     
@@ -66,8 +62,6 @@ class ActivitiesController extends Controller
     
     public function show(Request $request, $id, $activity_id)
     {
-        //var_dump($activity_id);
-        
         $user = User::find($id);
         $activity = Activity::find($activity_id);
         $followings = $user->followings()->paginate(10);
@@ -75,7 +69,7 @@ class ActivitiesController extends Controller
         $cal = new Calendar($list);
         $tag = $cal->showCalendarTag($request->month,$request->year,'',$id);
         $activities = $user->activities()->orderBy('created_at', 'desc')->paginate(10);
-        
+        $comments = Comment::find($activity_id);
         
         $data = [
             'user' => $user,

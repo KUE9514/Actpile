@@ -38,5 +38,8 @@ Route::group(['middleware' => ['auth']], function () {
     });
     
     Route::resource('activities', 'ActivitiesController', ['only' => ['store', 'destroy']]);
+    
+    
+    Route::resource('comments', 'CommentsController', ['only' => ['store', 'show']]);
 });
 
