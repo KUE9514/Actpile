@@ -8,7 +8,6 @@
                 </div>
                 <div>
                     {!! $activity->day !!}
-                    {!! $activity->id !!}
                 </div>    
                 <div>
                     {!! $activity->title !!}
