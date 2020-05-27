@@ -37,7 +37,7 @@ class ActivitiesController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-             
+             'day' => 'required',
              'title' => 'required|max:10',
              ]);
         $request->user()->activities()->create([
@@ -108,6 +108,10 @@ class ActivitiesController extends Controller
     
     public function update (Request $request)
     {
+        $this->validate($request, [
+             'day' => 'required',
+             'title' => 'required|max:10',
+        ]);
         $activity = Activity::find($request->activity_id);
         $activity->day = $request->day;
         $activity->title = $request->title;
