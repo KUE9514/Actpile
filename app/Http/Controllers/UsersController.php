@@ -24,7 +24,8 @@ class UsersController extends Controller
         $user = User::find($id);
         $list = Activity::all();
         $cal = new Calendar($list);
-        $tag = $cal->showCalendarTag($request->month,$request->year,$id,$id);
+        $path = '/users/'. $id;
+        $tag = $cal->showCalendarTag($request->month,$request->year,$path,$id);
         $activities = $user->activities()->orderBy('created_at', 'desc')->paginate(10);
         
         $data = [
@@ -44,7 +45,8 @@ class UsersController extends Controller
         $followings = $user->followings()->paginate(10);
         $list = Activity::all();
         $cal = new Calendar($list);
-        $tag = $cal->showCalendarTag($request->month,$request->year,'',$id);
+        $path = '/users/'. $id. '/followings';
+        $tag = $cal->showCalendarTag($request->month,$request->year,$path,$id);
         
         $data = [
             'user' => $user,
@@ -63,7 +65,8 @@ class UsersController extends Controller
         $followers = $user->followers()->paginate(10);
         $list = Activity::all();
         $cal = new Calendar($list);
-        $tag = $cal->showCalendarTag($request->month,$request->year,'',$id);
+        $path = '/users/'. $id. '/followers';
+        $tag = $cal->showCalendarTag($request->month, $request->year, $path, $id);
         
         $data = [
             'user' => $user,

@@ -12,8 +12,7 @@
             </div>
         </div>
         <div class="col">
-            <h2>合計時間</h2>
-            <h2>合計時間</h2>
+
         </div>
     </div>
     <div class="row">
@@ -24,27 +23,27 @@
             <div class="form-group row">
             <label class="col-form-label">日付：</label>
             <div class="col-4">
-                {!! Form::date('day', null, ['class' => 'form-control']) !!}
+                {!! Form::date('day',$activity->day , ['class' => 'form-control']) !!}
             </div>
         </div>
         <div class="form-group row">
             <label class="col-form-label">活動内容：</label>
             <div class="col-3">
-                {!! Form::text('title', old('title'), ['class' => 'form-control']) !!}
+                {!! Form::text('title', $activity->title, ['class' => 'form-control']) !!}
             </div>
         </div>
         <div class="form-group row">
             <label class="col-form-label">時間：</label>
             <div class="col-3">
-                {!! Form::time('time', old('time'), ['class' => 'form-control']) !!}
+                {!! Form::time('time', $activity->time, ['class' => 'form-control']) !!}
             </div>
         </div>
         <label class="col-form-label">メモ：</label>
             <div>
-                {!! Form::textarea('content', old('content'), ['class' => 'form-control']) !!}
+                {!! Form::textarea('content', $activity->content, ['class' => 'form-control']) !!}
             </div>
         <div>
-            {!! Form::submit('Post', ['class' => 'btn btn-primary']) !!}
+            {!! Form::submit('保存', ['class' => 'btn btn-primary']) !!}
         </div>
         {!! Form::close() !!}    
             

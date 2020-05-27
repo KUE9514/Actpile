@@ -34,7 +34,7 @@
                                 {!! Form::submit('拍手', ['class' => "btn btn-light btn-sm"]) !!}
                             {!! Form::close() !!}
                         @endif
-                        <span class="badge badge-secondary">{{ $count_applauses }}</span>
+                        
                     </div>    
                 </div>
             </div>

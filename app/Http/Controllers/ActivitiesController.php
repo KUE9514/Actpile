@@ -67,7 +67,8 @@ class ActivitiesController extends Controller
         $followings = $user->followings()->paginate(10);
         $list = Activity::all();
         $cal = new Calendar($list);
-        $tag = $cal->showCalendarTag($request->month,$request->year,'',$id);
+        $path = '/users/' . $id . '/activities/' . $activity_id;
+        $tag = $cal->showCalendarTag($request->month,$request->year,$path,$id);
         $activities = $user->activities()->orderBy('created_at', 'desc')->paginate(10);
         $comments = Comment::find($activity_id);
         
@@ -107,17 +108,13 @@ class ActivitiesController extends Controller
     
     public function update (Request $request)
     {
-        $this->validate($request, [
-             
-             'title' => 'required|max:10',
-             ]);
-        $request->user()->activities()->save([
-            'day' => $request->day,
-            'title' => $request->title,
-            'content' => $request->content,
-            'time' => $request->time,
-            ]);
-        return back();
-        
+        $activity = Activity::find($request->activity_id);
+        $activity->day = $request->day;
+        $activity->title = $request->title;
+        $activity->content = $request->content;
+        $activity->time = $request->time;
+        $activity->save();
+
+        return redirect('/users/' . $activity->user_id . '/activities/' . $request->activity_id);
     }
 }
