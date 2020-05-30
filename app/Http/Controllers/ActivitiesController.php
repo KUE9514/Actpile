@@ -20,9 +20,9 @@ class ActivitiesController extends Controller
             $targetuserId = \Auth::id();
             $user = \Auth::user();
             //合計時間
-            $total_sec = Activity::where('user_id',$targetuserId)->sum(DB::raw("TIME_TO_SEC(time)"));
-            $userTime_sum = gmdate("i", $total_sec);
-            $total_hour = $total_sec/3600;
+            $totalsec = Activity::where('user_id',$targetuserId)->sum(DB::raw("TIME_TO_SEC(time)"));
+            $userTimesum = gmdate("i", $totalsec);
+            $totalhour = $totalsec/3600;
             $list = Activity::all();
             $cal = new Calendar($list);
             $tag = $cal->showCalendarTag($request->month,$request->year,'',$targetuserId);
@@ -32,7 +32,7 @@ class ActivitiesController extends Controller
                 'user' =>$user,
                 'cal_tag' => $tag,
                 'activities' => $activities,
-                'user_time' => substr($total_hour,0,2)."h". $userTime_sum."m",
+                'user_time' => substr($totalhour,0,2)."h". $userTimesum."m",
             ];
             $data += $this->counts($user);
         }
