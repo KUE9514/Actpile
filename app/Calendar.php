@@ -57,7 +57,7 @@ EOS;
                     $target = date("Y-m-d", mktime(0,0,0, $month, $day, $year));
                     foreach($this->activities as $val) {
                         if ($targetuserId == $val->user_id && $val->day == $target) {
-                            $this->html .= $val->title . "<br>" . $val->time . "<br><a href='/users/{$val->user_id }/activities/{$val->id}'>詳細</a>";
+                            $this->html .= $val->title . "<br>" . substr($val->time,0,5) . "<br><a href='/users/{$val->user_id }/activities/{$val->id}'>詳細</a>";
                             $this->html .= '</a>';
                             break;
                         }

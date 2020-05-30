@@ -11,7 +11,7 @@
                 </div>    
                 <div>
                     {!! $activity->title !!}
-                    {!! $activity->time !!}
+                    {!! substr($activity->time, 0, 5) !!}
                     <p class="mb-0">{!! $activity->content !!}</p>
                 </div>
                 <div class="row">

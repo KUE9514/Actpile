@@ -23,7 +23,7 @@
             
             <p>日付:{!! $activity->day !!}</p>
             <p>活動内容：{!! $activity->title !!}</p>
-            <p>活動時間：{!! $activity->time !!}</p>
+            <p>活動時間：{!! substr($activity->time, 0, 5) !!}</p>
             <p>メモ：{!! $activity->content !!}</p>
             
             {!! link_to_route('comments.show', 'コメント', ['id' => $activity->id], ['class' => 'btn btn-light btn-sm']) !!}
