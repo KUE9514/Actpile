@@ -19,7 +19,6 @@ class ActivitiesController extends Controller
         {
             $targetuserId = \Auth::id();
             $user = \Auth::user();
-            //合計時間
             $totalsec = Activity::where('user_id',$targetuserId)->sum(DB::raw("TIME_TO_SEC(time)"));
             $userTimesum = gmdate("i", $totalsec);
             $totalhour = $totalsec/3600;
