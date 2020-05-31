@@ -8,7 +8,7 @@ use App\User;
 use App\Calendar;
 use App\Activity;
 use App\Comment;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 class ActivitiesController extends Controller
 {
