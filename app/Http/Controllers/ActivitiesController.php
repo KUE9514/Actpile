@@ -32,7 +32,7 @@ class ActivitiesController extends Controller
                 'user' =>$user,
                 'cal_tag' => $tag,
                 'activities' => $activities,
-                'user_time' => $totalsec,
+                'user_time' => substr($totalsec,0,5),
             ];
             $data += $this->counts($user);
         }
