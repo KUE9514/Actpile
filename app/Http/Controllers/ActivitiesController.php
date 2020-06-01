@@ -20,7 +20,6 @@ class ActivitiesController extends Controller
             $targetuserId = \Auth::id();
             $user = \Auth::user();
             $totalsec = Activity::where('user_id',$targetuserId)->sum('time');
-            var_dump($totalsec);
             //$userTimesum = gmdate("i", $totalsec);
             //$totalhour = $totalsec/3600;
             $list = Activity::all();
