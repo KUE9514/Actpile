@@ -11,4 +11,10 @@ class ApplauseController extends Controller
         \Auth::user()->applause($id);
         return back();
     }
+    
+    public function destroy($id)
+    {
+        \Auth::user()->unapplause($id);
+        return back();
+    }
 }

@@ -24,7 +24,7 @@
                     
                     <div class="col-3">
                         @if (Auth::User()->is_applauses($activity->id))
-                            {!! Form::open(['route' => ['applauses.applause', $activity->id]]) !!}
+                            {!! Form::open(['route' => ['applauses.unapplause', $activity->id], 'method' => 'delete']) !!}
                                 {!! Form::submit('拍手', ['class' => "btn btn-success btn-sm"]) !!}
                             {!! Form::close() !!}
                             

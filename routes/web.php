@@ -35,6 +35,7 @@ Route::group(['middleware' => ['auth']], function () {
     });
     Route::group(['prefix' => 'applauses/{id}'], function() {
         Route::post('applause', 'ApplauseController@store')->name('applauses.applause');
+        Route::delete('unapplause', 'ApplauseController@destroy')->name('applauses.unapplause');
     });
     
     Route::resource('activities', 'ActivitiesController', ['only' => ['store', 'destroy']]);

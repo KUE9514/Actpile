@@ -98,6 +98,12 @@ class User extends Authenticatable
         }
     }
     
+    public function unapplause($activityId)
+    {
+        $this->applauses()->detach($activityId);
+        return true;
+    }
+    
     public function is_applauses($activityId)
     {
         return $this->applauses()->where('activity_id', $activityId)->exists();
