@@ -17,11 +17,9 @@ class ActivitiesController extends Controller
         $data = [];
         if (\Auth::check())
         {
-            $targetuserId = \Auth::id();
             $user = \Auth::user();
-            $totalsec = Activity::where('user_id',$targetuserId)->sum('time');
-            //$userTimesum = gmdate("i", $totalsec);
-            //$totalhour = $totalsec/3600;
+            $targetuserId = \Auth::id();
+            $total_time = Activity::where('user_id',$targetuserId)->sum('time');
             $list = Activity::all();
             $cal = new Calendar($list);
             $tag = $cal->showCalendarTag($request->month,$request->year,'',$targetuserId);
@@ -31,7 +29,7 @@ class ActivitiesController extends Controller
                 'user' =>$user,
                 'cal_tag' => $tag,
                 'activities' => $activities,
-                'user_time' => $totalsec,
+                'user_time' => $total_time,
             ];
             $data += $this->counts($user);
         }
@@ -75,13 +73,16 @@ class ActivitiesController extends Controller
         $tag = $cal->showCalendarTag($request->month,$request->year,$path,$id);
         $activities = $user->activities()->orderBy('created_at', 'desc')->paginate(10);
         $comments = Comment::find($activity_id);
+        $targetuserId = \Auth::id();
+        $total_time = Activity::where('user_id',$targetuserId)->sum('time');
         
         $data = [
             'user' => $user,
             'users' => $followings,
             'cal_tag' => $tag,
             'activities' => $activities,
-            'activity' => $activity
+            'activity' => $activity,
+            'user_time' => $total_time,
         ];
         $data += $this->counts($user);
         

@@ -14,8 +14,9 @@
             </div>
         </div>
         <div>
-           
+            <h2>TotalTime:{{ $user_time }}</h2>
         </div>
+
     </div>
     <div class="row">
         <div class="col-md-8">

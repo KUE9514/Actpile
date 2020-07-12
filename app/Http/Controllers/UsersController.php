@@ -27,11 +27,13 @@ class UsersController extends Controller
         $path = '/users/'. $id;
         $tag = $cal->showCalendarTag($request->month,$request->year,$path,$id);
         $activities = $user->activities()->orderBy('created_at', 'desc')->paginate(10);
+        $total_time = Activity::where('user_id',$id)->sum('time');
         
         $data = [
             'user' =>$user,
             'cal_tag' => $tag,
             'activities' => $activities,
+            'user_time' => $total_time,
         ];
         
         $data += $this->counts($user);
@@ -47,11 +49,13 @@ class UsersController extends Controller
         $cal = new Calendar($list);
         $path = '/users/'. $id. '/followings';
         $tag = $cal->showCalendarTag($request->month,$request->year,$path,$id);
+        $total_time = Activity::where('user_id',$id)->sum('time');
         
         $data = [
             'user' => $user,
             'users' => $followings,
-            'cal_tag' => $tag
+            'cal_tag' => $tag,
+            'user_time' => $total_time,
         ];
         
         $data += $this->counts($user);
@@ -67,11 +71,13 @@ class UsersController extends Controller
         $cal = new Calendar($list);
         $path = '/users/'. $id. '/followers';
         $tag = $cal->showCalendarTag($request->month, $request->year, $path, $id);
+        $total_time = Activity::where('user_id',$id)->sum('time');
         
         $data = [
             'user' => $user,
             'users' => $followers,
-            'cal_tag' => $tag
+            'cal_tag' => $tag,
+            'user_time' => $total_time,
         ];
         
         $data += $this->counts($user);
